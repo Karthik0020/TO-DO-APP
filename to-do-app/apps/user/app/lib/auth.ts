@@ -2,6 +2,7 @@ import db from "@repo/db/client";
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcrypt";
 
+
 export const authOptions = {
     providers: [
       CredentialsProvider({
@@ -53,9 +54,8 @@ export const authOptions = {
           },
         })
     ],
-    secret:  "secret",
+    secret:  process.env.JWTSECRET,
     callbacks: {
-        // TODO: can u fix the type here? Using any is bad
         async session({ token, session }: any) {
             session.user.id = token.sub
 
