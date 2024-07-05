@@ -1,14 +1,19 @@
 import { NextResponse } from "next/server";
-import db from "@repo/db/client"
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../lib/auth";
 
 export const GET = async () => {
-    await db.todo.create({
-        data:{
-            title: "jjkj",
-            userId: 1,
-        }
-    })
+   const session = await getServerSession(authOptions)
+   console.log(session)
+   
+   if(session.user) {
     return NextResponse.json({
-        msg: "user created"
+        user: session.user.name
+    })
+   }
+   
+   console.log(session.user)
+    return NextResponse.json({
+        msg: "user not loged in"
     })
 }

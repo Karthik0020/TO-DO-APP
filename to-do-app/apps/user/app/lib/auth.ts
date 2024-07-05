@@ -2,6 +2,7 @@ import db from "@repo/db/client"
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcrypt"
 
+
 export const authOptions = {
     providers: [
         CredentialsProvider({
@@ -29,7 +30,7 @@ export const authOptions = {
                     return null;
                 }
                 try{
-                    const user = await  db.user.create({
+                    const user= await  db.user.create({
                         data:{
                             email: credentials.email,
                             password: hashedPassword
@@ -37,8 +38,8 @@ export const authOptions = {
                     });
                     return{
                         id: user.id.toString(),
-                            email: user.email,
-                            name: user?.name
+                        email: user.email,
+                        name: user?.name
                     }
                 } catch (e){
                     console.error(e)
